@@ -27,11 +27,11 @@ export class TextExport {
      * @param {string} fileName - Specified file name.
      * @return {void}
      */
-    public save(documentHelper: DocumentHelper, fileName: string): void {
+    public save(documentHelper: DocumentHelper, fileName: string, extension: string = '.txt'): void {
         this.serialize(documentHelper);
         const writer: StreamWriter = new StreamWriter();
         this.writeInternal(writer);
-        writer.save(fileName + '.txt');
+        writer.save(fileName + extension);
     }
     /**
      * Save text document as Blob.

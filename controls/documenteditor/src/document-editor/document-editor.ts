@@ -2517,19 +2517,20 @@ export class DocumentEditor extends Component<HTMLElement> implements INotifyPro
      *
      * @param {string} fileName - Specifies the file name.
      * @param {FormatType} formatType - Specifies the format type.
+     * @param {string} extension - Custom file format extension.
      * @returns {void}
      */
-    public save(fileName: string, formatType?: FormatType): void {
+    public save(fileName: string, formatType?: FormatType, extension?: string): void {
         fileName = fileName || 'Untitled';
         if (isNullOrUndefined(this.documentHelper)) {
             throw new Error('Invalid operation.');
         }
         if (formatType === 'Docx' && this.wordExportModule) {
             if (this.wordExportModule) {
-                this.wordExportModule.save(this.documentHelper, fileName);
+                this.wordExportModule.save(this.documentHelper, fileName, extension);
             }
         } else if (formatType === 'Txt' && this.textExportModule) {
-            this.textExportModule.save(this.documentHelper, fileName);
+            this.textExportModule.save(this.documentHelper, fileName, extension);
         } else if (formatType === 'Sfdt' && this.enableSfdtExport && this.sfdtExportModule) {
             const jsonString: string = this.serialize();
             const blob: Blob = new Blob([jsonString], {

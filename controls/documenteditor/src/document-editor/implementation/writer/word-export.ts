@@ -387,22 +387,22 @@ export class WordExport {
      * @param {string} fileName - file name
      * @returns {void}
      */
-    public save(documentHelper: DocumentHelper, fileName: string): void {
+    public save(documentHelper: DocumentHelper, fileName: string, extension: string = '.docx'): void {
         this.fileName = fileName;
         this.serialize(documentHelper);
         const excelFiles: Promise<Blob>[] = this.serializeExcelFiles();
         if (excelFiles && excelFiles.length > 0) {
             Promise.all(excelFiles).then(() => {
-                this.saveInternal(fileName);
+                this.saveInternal(fileName, extension);
             });
         } else {
-            this.saveInternal(fileName);
+            this.saveInternal(fileName, extension);
         }
         this.close();
     }
 
-    private saveInternal(fileName: string): void {
-        this.mArchive.save(fileName + '.docx').then((mArchive: ZipArchive): void => {
+    private saveInternal(fileName: string, extension: string): void {
+        this.mArchive.save(fileName + extension).then((mArchive: ZipArchive): void => {
             mArchive.destroy();
         });
     }
